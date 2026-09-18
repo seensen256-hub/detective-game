@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ملفات المحقق 🕵🏻‍♀️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 92%;
+    max-width: 650px;
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #000;
+}
+
+h1 {
+    text-align: center;
+    color: #e53935;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #bbb;
+    margin-bottom: 25px;
+}
+
+.case {
+    background: #252525;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.case h2 {
+    color: #ff5252;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #e53935;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff5252;
+}
+
+.clue {
+    background: #333;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: none;
+}
+
+.suspect {
+    background: #292929;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid #444;
+}
+
+.suspect:hover {
+    background: #383838;
+}
+
+#result {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#restart {
+    background: #555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🕵🏻‍♀️ ملفات المحقق</h1>
+
+    <p class="subtitle">
+        القضية رقم 001 — اختفاء الساعة الذهبية
+    </p>
+
+    <div class="case">
+
+        <h2>📁 القضية</h2>
+
+        <p>
+            اختفت ساعة ذهبية من منزل السيد سامر
+            أثناء وجود أربعة أشخاص في المنزل.
+        </p>
+
+        <p>
+            مهمتك: اكتشف من سرق الساعة اعتمادًا على الأدلة.
+        </p>
+
+    </div>
+
+    <div class="case">
+
+        <h2>🔎 الأدلة</h2>
+
+        <button onclick="showClue(1)">
+            الدليل الأول
+        </button>
+
+        <div id="clue1" class="clue">
+            🕰️ الساعة اختفت بين الساعة 8:00 و8:30 مساءً.
+        </div>
+
+        <button onclick="showClue(2)">
+            الدليل الثاني
+        </button>
+
+        <div id="clue2" class="clue">
+            👣 وُجدت آثار أقدام قرب غرفة المكتب.
+        </div>
+
+        <button onclick="showClue(3)">
+            الدليل الثالث
+        </button>
+
+        <div id="clue3" class="clue">
+            🔑 باب المكتب لم يُفتح بالقوة.
+        </div>
+
+        <button onclick="showClue(4)">
+            الدليل الرابع
+        </button>
+
+        <div id="clue4" class="clue">
+            🧤 وُجد قفاز أسود قرب المكتب.
+        </div>
+
+    </div>
+
+    <div class="case">
+
+        <h2>👥 المشتبه بهم</h2>
+
+        <div class="suspect" onclick="chooseSuspect('ليان')">
+            👩 ليان — ابنة صاحب المنزل
+        </div>
+
+        <div class="suspect" onclick="chooseSuspect('عمر')">
+            👨 عمر — صديق العائلة
+        </div>
+
+        <div class="suspect" onclick="chooseSuspect('نور')">
+            👩 نور — الخادمة
+        </div>
+
+        <div class="suspect" onclick="chooseSuspect('كريم')">
+            👨 كريم — شقيق صاحب المنزل
+        </div>
+
+    </div>
+
+    <div id="result"></div>
+
+    <button id="restart" onclick="location.reload()">
+        🔄 قضية جديدة
+    </button>
+
+</div>
+
+<script>
+
+function showClue(number) {
+    document.getElementById("clue" + number).style.display = "block";
+}
+
+function chooseSuspect(name) {
+
+    let result = document.getElementById("result");
+
+    if (name === "عمر") {
+
+        result.innerHTML =
+        "🎉 أحسنت! لقد حللت القضية! 🕵🏻‍♀️🔎<br><br>" +
+        "كان عمر هو السارق.";
+
+    } else {
+
+        result.innerHTML =
+        "❌ اختيار خاطئ!<br><br>" +
+        "هذا الشخص ليس السارق. حاول مرة أخرى 🔎";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
