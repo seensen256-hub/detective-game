@@ -14,54 +14,88 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #111;
+    background: #0d0d0d;
     color: white;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 25px 0;
 }
 
 .container {
     width: 92%;
-    max-width: 650px;
-    background: #1c1c1c;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 30px #000;
+    max-width: 700px;
+    margin: auto;
+    background: #1b1b1b;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 0 35px #000;
 }
 
 h1 {
     text-align: center;
     color: #e53935;
+    font-size: 32px;
 }
 
 .subtitle {
     text-align: center;
-    color: #bbb;
+    color: #aaa;
     margin-bottom: 25px;
 }
 
-.case {
+.case-card {
     background: #252525;
-    padding: 20px;
+    padding: 18px;
+    margin: 12px 0;
     border-radius: 15px;
-    margin-bottom: 20px;
+    border: 1px solid #3a3a3a;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.case h2 {
+.case-card:hover {
+    background: #303030;
+    transform: scale(1.01);
+}
+
+.case-card h3 {
+    margin: 0 0 8px;
     color: #ff5252;
+}
+
+.case-card p {
+    color: #bbb;
+    margin-bottom: 0;
+}
+
+.case-box {
+    background: #252525;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+}
+
+.case-box h2 {
+    color: #ff5252;
+}
+
+.clue {
+    background: #333;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.6;
 }
 
 button {
     width: 100%;
-    padding: 14px;
-    margin-top: 10px;
     border: none;
     border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
     background: #e53935;
     color: white;
-    font-size: 17px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -69,21 +103,13 @@ button:hover {
     background: #ff5252;
 }
 
-.clue {
-    background: #333;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 10px;
-    display: none;
-}
-
 .suspect {
     background: #292929;
     padding: 15px;
-    border-radius: 10px;
     margin-top: 10px;
-    cursor: pointer;
+    border-radius: 10px;
     border: 1px solid #444;
+    cursor: pointer;
 }
 
 .suspect:hover {
@@ -92,12 +118,13 @@ button:hover {
 
 #result {
     text-align: center;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: bold;
-    margin-top: 20px;
+    line-height: 1.7;
+    margin: 20px 0;
 }
 
-#back {
+.back {
     background: #555;
 }
 
@@ -105,13 +132,13 @@ button:hover {
     display: none;
 }
 
-.case-button {
-    background: #292929;
-    border: 1px solid #555;
-}
-
-.case-button:hover {
-    background: #383838;
+.badge {
+    display: inline-block;
+    background: #e53935;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 </style>
 </head>
@@ -120,272 +147,514 @@ button:hover {
 
 <div class="container">
 
-    <h1>🕵🏻‍♀️ ملفات المحقق</h1>
+<h1>🕵🏻‍♀️ ملفات المحقق</h1>
 
-    <p class="subtitle">
-        اختر القضية التي تريد التحقيق فيها 🔎
-    </p>
+<p class="subtitle">
+    15 قضية غامضة بانتظارك... هل تستطيع حلها كلها؟ 🔎
+</p>
 
-    <!-- قائمة القضايا -->
+<!-- قائمة القضايا -->
 
-    <div id="caseMenu">
+<div id="menu">
 
-        <div class="case">
-
-            <h2>📁 القضايا</h2>
-
-            <button class="case-button" onclick="openCase(1)">
-                🕰️ القضية 001 — اختفاء الساعة الذهبية
-            </button>
-
-            <button class="case-button" onclick="openCase(2)">
-                💎 القضية 002 — سرقة الماسة
-            </button>
-
-        </div>
-
+    <div class="case-card" onclick="openCase(0)">
+        <h3>🕰️ القضية 001 — اختفاء الساعة الذهبية</h3>
+        <p>ساعة ثمينة اختفت من منزل فاخر.</p>
     </div>
 
-
-    <!-- القضية الأولى -->
-
-    <div id="case1" class="hidden">
-
-        <div class="case">
-
-            <h2>📁 القضية 001</h2>
-
-            <p>
-                اختفت ساعة ذهبية من منزل السيد سامر
-                أثناء وجود أربعة أشخاص في المنزل.
-            </p>
-
-            <p>
-                مهمتك: اكتشف من سرق الساعة اعتمادًا على الأدلة.
-            </p>
-
-        </div>
-
-        <div class="case">
-
-            <h2>🔎 الأدلة</h2>
-
-            <button onclick="showClue('clue1')">
-                الدليل الأول
-            </button>
-
-            <div id="clue1" class="clue">
-                🕰️ الساعة اختفت بين الساعة 8:00 و8:30 مساءً.
-            </div>
-
-            <button onclick="showClue('clue2')">
-                الدليل الثاني
-            </button>
-
-            <div id="clue2" class="clue">
-                👣 وُجدت آثار أقدام قرب غرفة المكتب.
-            </div>
-
-            <button onclick="showClue('clue3')">
-                الدليل الثالث
-            </button>
-
-            <div id="clue3" class="clue">
-                🔑 باب المكتب لم يُفتح بالقوة.
-            </div>
-
-            <button onclick="showClue('clue4')">
-                الدليل الرابع
-            </button>
-
-            <div id="clue4" class="clue">
-                🧤 وُجد قفاز أسود قرب المكتب.
-            </div>
-
-        </div>
-
-        <div class="case">
-
-            <h2>👥 المشتبه بهم</h2>
-
-            <div class="suspect" onclick="chooseSuspect('عمر', 1)">
-                👨 عمر — صديق العائلة
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('ليان', 1)">
-                👩 ليان — ابنة صاحب المنزل
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('نور', 1)">
-                👩 نور — الخادمة
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('كريم', 1)">
-                👨 كريم — شقيق صاحب المنزل
-            </div>
-
-        </div>
-
-        <div id="result1" class="result"></div>
-
-        <button id="back" onclick="backToMenu()">
-            🔙 العودة إلى القضايا
-        </button>
-
+    <div class="case-card" onclick="openCase(1)">
+        <h3>💎 القضية 002 — سرقة الماسة</h3>
+        <p>ماسة نادرة اختفت من خزنة فندق.</p>
     </div>
 
-
-    <!-- القضية الثانية -->
-
-    <div id="case2" class="hidden">
-
-        <div class="case">
-
-            <h2>💎 القضية 002</h2>
-
-            <p>
-                اختفت ماسة نادرة من خزنة داخل فندق فاخر.
-            </p>
-
-            <p>
-                كانت الماسة موجودة قبل الساعة 9:00 مساءً،
-                وبعدها اختفت دون أن يكسر أحد الخزنة.
-            </p>
-
-            <p>
-                مهمتك: اكتشف من سرق الماسة! 🔎
-            </p>
-
-        </div>
-
-        <div class="case">
-
-            <h2>🔎 الأدلة</h2>
-
-            <button onclick="showClue('clue5')">
-                الدليل الأول
-            </button>
-
-            <div id="clue5" class="clue">
-                🕘 الكاميرات توقفت عن العمل لمدة عشر دقائق فقط.
-            </div>
-
-            <button onclick="showClue('clue6')">
-                الدليل الثاني
-            </button>
-
-            <div id="clue6" class="clue">
-                🔑 الخزنة فُتحت باستخدام الرمز الصحيح.
-            </div>
-
-            <button onclick="showClue('clue7')">
-                الدليل الثالث
-            </button>
-
-            <div id="clue7" class="clue">
-                📱 وُجد هاتف بالقرب من غرفة الخزنة.
-            </div>
-
-            <button onclick="showClue('clue8')">
-                الدليل الرابع
-            </button>
-
-            <div id="clue8" class="clue">
-                🎫 بطاقة دخول موظف استُخدمت قبل اختفاء الماسة.
-            </div>
-
-        </div>
-
-        <div class="case">
-
-            <h2>👥 المشتبه بهم</h2>
-
-            <div class="suspect" onclick="chooseSuspect('سارة', 2)">
-                👩 سارة — موظفة الاستقبال
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('مازن', 2)">
-                👨 مازن — حارس الفندق
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('رامي', 2)">
-                👨 رامي — نزيل في الفندق
-            </div>
-
-            <div class="suspect" onclick="chooseSuspect('دانا', 2)">
-                👩 دانا — مديرة الفندق
-            </div>
-
-        </div>
-
-        <div id="result2" class="result"></div>
-
-        <button id="back" onclick="backToMenu()">
-            🔙 العودة إلى القضايا
-        </button>
-
+    <div class="case-card" onclick="openCase(2)">
+        <h3>🖼️ القضية 003 — اللوحة المفقودة</h3>
+        <p>لوحة فنية اختفت من معرض مغلق.</p>
     </div>
+
+    <div class="case-card" onclick="openCase(3)">
+        <h3>🏨 القضية 004 — لغز الفندق</h3>
+        <p>غرفة أُغلقت من الداخل وحدث اختفاء غامض.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(4)">
+        <h3>📱 القضية 005 — الهاتف المفقود</h3>
+        <p>هاتف اختفى أثناء حفلة منزلية.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(5)">
+        <h3>💰 القضية 006 — سرقة الخزنة</h3>
+        <p>المال اختفى دون أي أثر للكسر.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(6)">
+        <h3>🔑 القضية 007 — المفتاح الغامض</h3>
+        <p>مفتاح غريب قاد المحقق إلى السر.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(7)">
+        <h3>📦 القضية 008 — الطرد المختفي</h3>
+        <p>طرد مهم اختفى قبل وصول صاحبه.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(8)">
+        <h3>🚂 القضية 009 — لغز القطار</h3>
+        <p>حقيبة ثمينة اختفت أثناء رحلة قطار.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(9)">
+        <h3>🏠 القضية 010 — المنزل المقفل</h3>
+        <p>اختفاء غامض داخل منزل مغلق.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(10)">
+        <h3>💍 القضية 011 — الخاتم المفقود</h3>
+        <p>خاتم عائلي ثمين اختفى أثناء العشاء.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(11)">
+        <h3>📜 القضية 012 — الرسالة المجهولة</h3>
+        <p>رسالة غامضة كشفت سرًا قديمًا.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(12)">
+        <h3>🎭 القضية 013 — القناع الغامض</h3>
+        <p>شخص مجهول ظهر في حفلة واختفى بسرعة.</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(13)">
+        <h3>🧳 القضية 014 — الحقيبة الغامضة</h3>
+        <p>حقيبة تبدلت في المطار بالخطأ... أم لا؟</p>
+    </div>
+
+    <div class="case-card" onclick="openCase(14)">
+        <h3>🗝️ القضية 015 — الغرفة رقم 13</h3>
+        <p>غرفة مهجورة تخفي سرًا غريبًا.</p>
+    </div>
+
+</div>
+
+
+<!-- مكان القضية -->
+
+<div id="game" class="hidden">
+
+    <div id="caseContent"></div>
+
+    <div id="result"></div>
+
+    <button class="back" onclick="backToMenu()">
+        🔙 العودة إلى قائمة القضايا
+    </button>
+
+</div>
 
 </div>
 
 
 <script>
 
-function openCase(number) {
+const cases = [
 
-    document.getElementById("caseMenu").classList.add("hidden");
+{
+    title: "🕰️ القضية 001 — اختفاء الساعة الذهبية",
+    story: "اختفت ساعة ذهبية من منزل السيد سامر أثناء وجود أربعة أشخاص في المنزل.",
+    clues: [
+        "🕰️ الساعة اختفت بين الساعة 8:00 و8:30 مساءً.",
+        "👣 وُجدت آثار أقدام قرب غرفة المكتب.",
+        "🔑 باب المكتب لم يُفتح بالقوة.",
+        "🧤 وُجد قفاز أسود قرب المكتب."
+    ],
+    suspects: [
+        ["عمر", "👨 صديق العائلة"],
+        ["ليان", "👩 ابنة صاحب المنزل"],
+        ["نور", "👩 الخادمة"],
+        ["كريم", "👨 شقيق صاحب المنزل"]
+    ],
+    answer: "عمر"
+},
 
-    document.getElementById("case1").classList.add("hidden");
-    document.getElementById("case2").classList.add("hidden");
+{
+    title: "💎 القضية 002 — سرقة الماسة",
+    story: "اختفت ماسة نادرة من خزنة داخل فندق فاخر دون أن تُكسر الخزنة.",
+    clues: [
+        "🕘 كاميرات الممر توقفت لمدة عشر دقائق.",
+        "🔑 الخزنة فُتحت باستخدام الرمز الصحيح.",
+        "📱 وُجد هاتف بالقرب من غرفة الخزنة.",
+        "🎫 بطاقة موظف استُخدمت قبل اختفاء الماسة."
+    ],
+    suspects: [
+        ["سارة", "👩 موظفة الاستقبال"],
+        ["مازن", "👨 حارس الفندق"],
+        ["رامي", "👨 نزيل في الفندق"],
+        ["دانا", "👩 مديرة الفندق"]
+    ],
+    answer: "دانا"
+},
 
-    document.getElementById("case" + number).classList.remove("hidden");
+{
+    title: "🖼️ القضية 003 — اللوحة المفقودة",
+    story: "اختفت لوحة نادرة من معرض فني رغم أن أبواب المعرض كانت مغلقة.",
+    clues: [
+        "🎨 لم يكن هناك أي أثر لكسر الباب.",
+        "🧹 وُجدت آثار طلاء على عربة التنظيف.",
+        "🔒 نظام الإنذار أُوقف لمدة خمس دقائق.",
+        "👟 وُجدت آثار أقدام خلف اللوحة."
+    ],
+    suspects: [
+        ["هند", "👩 حارسة المعرض"],
+        ["فارس", "👨 عامل النظافة"],
+        ["رامي", "👨 الرسام"],
+        ["جود", "👩 الزائرة"]
+    ],
+    answer: "فارس"
+},
+
+{
+    title: "🏨 القضية 004 — لغز الفندق",
+    story: "اختفت حقيبة من غرفة فندق بينما كان باب الغرفة مقفلًا.",
+    clues: [
+        "🚪 الباب لم يُكسر.",
+        "🧹 دخلت خدمة الغرف قبل الاختفاء بقليل.",
+        "🔑 بطاقة دخول استُخدمت الساعة 3:15.",
+        "📷 الكاميرا أظهرت شخصًا يحمل منشفة كبيرة."
+    ],
+    suspects: [
+        ["سامي", "👨 موظف الاستقبال"],
+        ["ريم", "👩 خدمة الغرف"],
+        ["علي", "👨 نزيل الفندق"],
+        ["نور", "👩 مديرة الفندق"]
+    ],
+    answer: "ريم"
+},
+
+{
+    title: "📱 القضية 005 — الهاتف المفقود",
+    story: "اختفى هاتف ثمين أثناء حفلة منزلية حضرها أربعة أشخاص.",
+    clues: [
+        "📱 الهاتف كان على الطاولة قبل بداية الحفلة.",
+        "🛋️ الهاتف اختفى أثناء انقطاع الكهرباء.",
+        "🔦 شخص واحد فقط كان يحمل مصباحًا.",
+        "🎒 وُجدت علبة الهاتف داخل حقيبة."
+    ],
+    suspects: [
+        ["ليلى", "👩 صديقة العائلة"],
+        ["مروان", "👨 ابن الجيران"],
+        ["سيف", "👨 ابن صاحب المنزل"],
+        ["رنا", "👩 قريبة العائلة"]
+    ],
+    answer: "مروان"
+},
+
+{
+    title: "💰 القضية 006 — سرقة الخزنة",
+    story: "اختفى مبلغ كبير من خزنة مكتب دون وجود أي علامة على كسرها.",
+    clues: [
+        "🔐 الخزنة فُتحت بالرقم الصحيح.",
+        "📝 الرقم كان مكتوبًا في دفتر قديم.",
+        "☕ وُجد كوب قهوة قرب الخزنة.",
+        "⌚ حدثت السرقة أثناء استراحة الغداء."
+    ],
+    suspects: [
+        ["وسام", "👨 المحاسب"],
+        ["مريم", "👩 السكرتيرة"],
+        ["حيدر", "👨 المدير"],
+        ["قاسم", "👨 الحارس"]
+    ],
+    answer: "وسام"
+},
+
+{
+    title: "🔑 القضية 007 — المفتاح الغامض",
+    story: "عُثر على مفتاح غريب في حديقة منزل، وبعدها اكتُشف اختفاء صندوق قديم.",
+    clues: [
+        "🔑 المفتاح يطابق قفل المخزن.",
+        "🌱 وُجدت آثار تراب على حذاء أحد الأشخاص.",
+        "📦 الصندوق كان في المخزن.",
+        "🌧️ بدأت الأمطار بعد اختفاء الصندوق."
+    ],
+    suspects: [
+        ["ياسر", "👨 الجار"],
+        ["دينا", "👩 ابنة صاحب المنزل"],
+        ["كريم", "👨 عامل الحديقة"],
+        ["سارة", "👩 صديقة العائلة"]
+    ],
+    answer: "كريم"
+},
+
+{
+    title: "📦 القضية 008 — الطرد المختفي",
+    story: "اختفى طرد مهم من أمام منزل صاحبه قبل أن يتم استلامه.",
+    clues: [
+        "📦 شركة التوصيل أكدت وصول الطرد.",
+        "📹 الكاميرا سجلت شخصًا يقترب من الباب.",
+        "🧢 الشخص كان يرتدي قبعة زرقاء.",
+        "🚲 غادر المكان على دراجة."
+    ],
+    suspects: [
+        ["رامي", "👨 الجار"],
+        ["نور", "👩 قريبة صاحب الطرد"],
+        ["سعد", "👨 عامل التوصيل"],
+        ["ماهر", "👨 صديق العائلة"]
+    ],
+    answer: "رامي"
+},
+
+{
+    title: "🚂 القضية 009 — لغز القطار",
+    story: "اختفت حقيبة تحتوي على مجوهرات أثناء رحلة قطار.",
+    clues: [
+        "🚂 الحقيبة كانت تحت المقعد.",
+        "🎫 ثلاثة أشخاص فقط كانوا في العربة.",
+        "☕ خرج صاحب الحقيبة لشراء مشروب.",
+        "🧳 وُجدت حقيبة مشابهة في المقعد المجاور."
+    ],
+    suspects: [
+        ["سليم", "👨 المسافر الأول"],
+        ["هدى", "👩 المسافرة الثانية"],
+        ["كامل", "👨 المسافر الثالث"],
+        ["نور", "👩 موظفة القطار"]
+    ],
+    answer: "كامل"
+},
+
+{
+    title: "🏠 القضية 010 — المنزل المقفل",
+    story: "اختفت قطعة أثرية من منزل كان مغلقًا طوال الليل.",
+    clues: [
+        "🔒 جميع الأبواب كانت مقفلة.",
+        "🪟 نافذة صغيرة كانت مفتوحة.",
+        "🌿 وُجدت أوراق شجر داخل الغرفة.",
+        "👟 آثار الأقدام بدأت من الحديقة."
+    ],
+    suspects: [
+        ["فهد", "👨 الجار"],
+        ["ريم", "👩 الخادمة"],
+        ["عمر", "👨 الأخ"],
+        ["ليان", "👩 الابنة"]
+    ],
+    answer: "فهد"
+},
+
+{
+    title: "💍 القضية 011 — الخاتم المفقود",
+    story: "اختفى خاتم عائلي ثمين أثناء عشاء عائلي.",
+    clues: [
+        "🍽️ الخاتم كان على الطاولة.",
+        "💧 سقط كوب ماء قرب مكان الخاتم.",
+        "🧻 شخص واحد فقط نظف الطاولة.",
+        "👜 وُجدت علبة صغيرة داخل حقيبة."
+    ],
+    suspects: [
+        ["مها", "👩 الأخت"],
+        ["حسام", "👨 الأخ"],
+        ["رؤى", "👩 ابنة العائلة"],
+        ["سامي", "👨 الضيف"]
+    ],
+    answer: "رؤى"
+},
+
+{
+    title: "📜 القضية 012 — الرسالة المجهولة",
+    story: "وصلت رسالة مجهولة تحتوي على معلومات سرية عن شركة كبيرة.",
+    clues: [
+        "📜 الرسالة كُتبت من داخل المبنى.",
+        "🖨️ استُخدمت طابعة الطابق الثاني.",
+        "🕘 الرسالة طُبعت الساعة 9:20.",
+        "🔑 شخص واحد فقط يملك مفتاح غرفة الطابعة."
+    ],
+    suspects: [
+        ["طارق", "👨 المدير"],
+        ["سارة", "👩 الموظفة"],
+        ["مالك", "👨 الحارس"],
+        ["نور", "👩 السكرتيرة"]
+    ],
+    answer: "نور"
+},
+
+{
+    title: "🎭 القضية 013 — القناع الغامض",
+    story: "ظهر شخص مجهول في حفلة تنكرية واختفى بعد اختفاء قلادة ثمينة.",
+    clues: [
+        "🎭 الشخص كان يرتدي قناعًا أسود.",
+        "🧥 ترك معطفه في غرفة جانبية.",
+        "🔑 وُجد مفتاح داخل جيب المعطف.",
+        "👞 كان يرتدي حذاءً عليه طين."
+    ],
+    suspects: [
+        ["كريم", "👨 صاحب الحفلة"],
+        ["دانا", "👩 صديقة العائلة"],
+        ["مازن", "👨 الجار"],
+        ["ليث", "👨 الضيف الجديد"]
+    ],
+    answer: "ليث"
+},
+
+{
+    title: "🧳 القضية 014 — الحقيبة الغامضة",
+    story: "تبدلت حقيبتان في المطار، لكن إحدى الحقائب كانت تحتوي على شيء ثمين جدًا.",
+    clues: [
+        "🧳 الحقيبتان متطابقتان تقريبًا.",
+        "🏷️ إحدى البطاقات كانت مزورة.",
+        "📸 الكاميرا سجلت شخصًا يبدل البطاقات.",
+        "🧢 الشخص كان يرتدي قبعة رمادية."
+    ],
+    suspects: [
+        ["سامي", "👨 المسافر الأول"],
+        ["هند", "👩 المسافرة الثانية"],
+        ["فراس", "👨 عامل المطار"],
+        ["رائد", "👨 المسافر الثالث"]
+    ],
+    answer: "رائد"
+},
+
+{
+    title: "🗝️ القضية 015 — الغرفة رقم 13",
+    story: "في فندق قديم، اختفت وثيقة مهمة من الغرفة رقم 13 رغم أن الغرفة كانت مهجورة.",
+    clues: [
+        "🗝️ مفتاح الغرفة ظهر في مكتب الاستقبال.",
+        "👣 وُجدت آثار أقدام داخل الغرفة.",
+        "🕯️ كانت هناك شمعة مشتعلة.",
+        "📜 اختفت الوثيقة من صندوق خشبي."
+    ],
+    suspects: [
+        ["آدم", "👨 مدير الفندق"],
+        ["ليلى", "👩 موظفة الاستقبال"],
+        ["فارس", "👨 الحارس"],
+        ["نادر", "👨 زائر غامض"]
+    ],
+    answer: "نادر"
+}
+
+];
+
+
+function openCase(index) {
+
+    const selectedCase = cases[index];
+
+    document.getElementById("menu").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
+
+    let cluesHTML = "";
+
+    selectedCase.clues.forEach((clue, i) => {
+
+        cluesHTML += `
+            <button onclick="showClue(${i})">
+                🔎 الدليل ${i + 1}
+            </button>
+
+            <div class="clue" id="clue${i}">
+                ${clue}
+            </div>
+        `;
+
+    });
+
+
+    let suspectsHTML = "";
+
+    selectedCase.suspects.forEach(suspect => {
+
+        suspectsHTML += `
+            <div class="suspect"
+                 onclick="chooseSuspect('${suspect[0]}', ${index})">
+
+                ${suspect[1]} — ${suspect[0]}
+
+            </div>
+        `;
+
+    });
+
+
+    document.getElementById("caseContent").innerHTML = `
+
+        <div class="case-box">
+
+            <span class="badge">ملف القضية</span>
+
+            <h2>${selectedCase.title}</h2>
+
+            <p>${selectedCase.story}</p>
+
+            <p>
+                🕵🏻‍♀️ مهمتك: اقرأ الأدلة واكتشف السارق.
+            </p>
+
+        </div>
+
+
+        <div class="case-box">
+
+            <h2>🔎 الأدلة</h2>
+
+            ${cluesHTML}
+
+        </div>
+
+
+        <div class="case-box">
+
+            <h2>👥 المشتبه بهم</h2>
+
+            ${suspectsHTML}
+
+        </div>
+
+    `;
+
+    document.getElementById("result").innerHTML = "";
+
+}
+
+
+function showClue(number) {
+
+    document.getElementById("clue" + number).style.display = "block";
+
+}
+
+
+function chooseSuspect(name, index) {
+
+    const answer = cases[index].answer;
+
+    const result = document.getElementById("result");
+
+    if (name === answer) {
+
+        result.innerHTML = `
+            🎉🎉 أحسنت أيها المحقق! 🎉🎉
+            <br><br>
+            🔎 لقد حللت القضية بنجاح!
+            <br><br>
+            👤 السارق هو: ${answer}
+        `;
+
+    } else {
+
+        result.innerHTML = `
+            ❌ اختيار خاطئ!
+            <br><br>
+            هذا الشخص ليس السارق.
+            <br>
+            اقرأ الأدلة مرة أخرى 🔎🕵🏻‍♀️
+        `;
+
+    }
+
 }
 
 
 function backToMenu() {
 
-    document.getElementById("caseMenu").classList.remove("hidden");
+    document.getElementById("game").classList.add("hidden");
+    document.getElementById("menu").classList.remove("hidden");
 
-    document.getElementById("case1").classList.add("hidden");
-    document.getElementById("case2").classList.add("hidden");
-
-}
-
-
-function showClue(id) {
-
-    document.getElementById(id).style.display = "block";
-
-}
-
-
-function chooseSuspect(name, caseNumber) {
-
-    let result = document.getElementById("result" + caseNumber);
-
-    if (caseNumber === 1 && name === "عمر") {
-
-        result.innerHTML =
-        "🎉 أحسنت! لقد حللت القضية! 🕵🏻‍♀️🔎<br><br>" +
-        "كان عمر هو السارق.";
-
-    }
-
-    else if (caseNumber === 2 && name === "دانا") {
-
-        result.innerHTML =
-        "🎉 مذهل! حللت القضية الثانية! 💎🕵🏻‍♀️<br><br>" +
-        "كانت دانا هي سارقة الماسة.";
-
-    }
-
-    else {
-
-        result.innerHTML =
-        "❌ اختيار خاطئ!<br><br>" +
-        "هذا الشخص ليس السارق. اقرأ الأدلة مرة أخرى 🔎";
-
-    }
+    document.getElementById("caseContent").innerHTML = "";
+    document.getElementById("result").innerHTML = "";
 
 }
 
