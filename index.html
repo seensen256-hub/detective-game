@@ -34,7 +34,6 @@ body {
 h1 {
     text-align: center;
     color: #e53935;
-    margin-bottom: 10px;
 }
 
 .subtitle {
@@ -98,8 +97,21 @@ button:hover {
     margin-top: 20px;
 }
 
-#restart {
+#back {
     background: #555;
+}
+
+.hidden {
+    display: none;
+}
+
+.case-button {
+    background: #292929;
+    border: 1px solid #555;
+}
+
+.case-button:hover {
+    background: #383838;
 }
 </style>
 </head>
@@ -111,115 +123,270 @@ button:hover {
     <h1>🕵🏻‍♀️ ملفات المحقق</h1>
 
     <p class="subtitle">
-        القضية رقم 001 — اختفاء الساعة الذهبية
+        اختر القضية التي تريد التحقيق فيها 🔎
     </p>
 
-    <div class="case">
+    <!-- قائمة القضايا -->
 
-        <h2>📁 القضية</h2>
+    <div id="caseMenu">
 
-        <p>
-            اختفت ساعة ذهبية من منزل السيد سامر
-            أثناء وجود أربعة أشخاص في المنزل.
-        </p>
+        <div class="case">
 
-        <p>
-            مهمتك: اكتشف من سرق الساعة اعتمادًا على الأدلة.
-        </p>
+            <h2>📁 القضايا</h2>
 
-    </div>
+            <button class="case-button" onclick="openCase(1)">
+                🕰️ القضية 001 — اختفاء الساعة الذهبية
+            </button>
 
-    <div class="case">
+            <button class="case-button" onclick="openCase(2)">
+                💎 القضية 002 — سرقة الماسة
+            </button>
 
-        <h2>🔎 الأدلة</h2>
-
-        <button onclick="showClue(1)">
-            الدليل الأول
-        </button>
-
-        <div id="clue1" class="clue">
-            🕰️ الساعة اختفت بين الساعة 8:00 و8:30 مساءً.
-        </div>
-
-        <button onclick="showClue(2)">
-            الدليل الثاني
-        </button>
-
-        <div id="clue2" class="clue">
-            👣 وُجدت آثار أقدام قرب غرفة المكتب.
-        </div>
-
-        <button onclick="showClue(3)">
-            الدليل الثالث
-        </button>
-
-        <div id="clue3" class="clue">
-            🔑 باب المكتب لم يُفتح بالقوة.
-        </div>
-
-        <button onclick="showClue(4)">
-            الدليل الرابع
-        </button>
-
-        <div id="clue4" class="clue">
-            🧤 وُجد قفاز أسود قرب المكتب.
         </div>
 
     </div>
 
-    <div class="case">
 
-        <h2>👥 المشتبه بهم</h2>
+    <!-- القضية الأولى -->
 
-        <div class="suspect" onclick="chooseSuspect('ليان')">
-            👩 ليان — ابنة صاحب المنزل
+    <div id="case1" class="hidden">
+
+        <div class="case">
+
+            <h2>📁 القضية 001</h2>
+
+            <p>
+                اختفت ساعة ذهبية من منزل السيد سامر
+                أثناء وجود أربعة أشخاص في المنزل.
+            </p>
+
+            <p>
+                مهمتك: اكتشف من سرق الساعة اعتمادًا على الأدلة.
+            </p>
+
         </div>
 
-        <div class="suspect" onclick="chooseSuspect('عمر')">
-            👨 عمر — صديق العائلة
+        <div class="case">
+
+            <h2>🔎 الأدلة</h2>
+
+            <button onclick="showClue('clue1')">
+                الدليل الأول
+            </button>
+
+            <div id="clue1" class="clue">
+                🕰️ الساعة اختفت بين الساعة 8:00 و8:30 مساءً.
+            </div>
+
+            <button onclick="showClue('clue2')">
+                الدليل الثاني
+            </button>
+
+            <div id="clue2" class="clue">
+                👣 وُجدت آثار أقدام قرب غرفة المكتب.
+            </div>
+
+            <button onclick="showClue('clue3')">
+                الدليل الثالث
+            </button>
+
+            <div id="clue3" class="clue">
+                🔑 باب المكتب لم يُفتح بالقوة.
+            </div>
+
+            <button onclick="showClue('clue4')">
+                الدليل الرابع
+            </button>
+
+            <div id="clue4" class="clue">
+                🧤 وُجد قفاز أسود قرب المكتب.
+            </div>
+
         </div>
 
-        <div class="suspect" onclick="chooseSuspect('نور')">
-            👩 نور — الخادمة
+        <div class="case">
+
+            <h2>👥 المشتبه بهم</h2>
+
+            <div class="suspect" onclick="chooseSuspect('عمر', 1)">
+                👨 عمر — صديق العائلة
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('ليان', 1)">
+                👩 ليان — ابنة صاحب المنزل
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('نور', 1)">
+                👩 نور — الخادمة
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('كريم', 1)">
+                👨 كريم — شقيق صاحب المنزل
+            </div>
+
         </div>
 
-        <div class="suspect" onclick="chooseSuspect('كريم')">
-            👨 كريم — شقيق صاحب المنزل
-        </div>
+        <div id="result1" class="result"></div>
+
+        <button id="back" onclick="backToMenu()">
+            🔙 العودة إلى القضايا
+        </button>
 
     </div>
 
-    <div id="result"></div>
 
-    <button id="restart" onclick="location.reload()">
-        🔄 قضية جديدة
-    </button>
+    <!-- القضية الثانية -->
+
+    <div id="case2" class="hidden">
+
+        <div class="case">
+
+            <h2>💎 القضية 002</h2>
+
+            <p>
+                اختفت ماسة نادرة من خزنة داخل فندق فاخر.
+            </p>
+
+            <p>
+                كانت الماسة موجودة قبل الساعة 9:00 مساءً،
+                وبعدها اختفت دون أن يكسر أحد الخزنة.
+            </p>
+
+            <p>
+                مهمتك: اكتشف من سرق الماسة! 🔎
+            </p>
+
+        </div>
+
+        <div class="case">
+
+            <h2>🔎 الأدلة</h2>
+
+            <button onclick="showClue('clue5')">
+                الدليل الأول
+            </button>
+
+            <div id="clue5" class="clue">
+                🕘 الكاميرات توقفت عن العمل لمدة عشر دقائق فقط.
+            </div>
+
+            <button onclick="showClue('clue6')">
+                الدليل الثاني
+            </button>
+
+            <div id="clue6" class="clue">
+                🔑 الخزنة فُتحت باستخدام الرمز الصحيح.
+            </div>
+
+            <button onclick="showClue('clue7')">
+                الدليل الثالث
+            </button>
+
+            <div id="clue7" class="clue">
+                📱 وُجد هاتف بالقرب من غرفة الخزنة.
+            </div>
+
+            <button onclick="showClue('clue8')">
+                الدليل الرابع
+            </button>
+
+            <div id="clue8" class="clue">
+                🎫 بطاقة دخول موظف استُخدمت قبل اختفاء الماسة.
+            </div>
+
+        </div>
+
+        <div class="case">
+
+            <h2>👥 المشتبه بهم</h2>
+
+            <div class="suspect" onclick="chooseSuspect('سارة', 2)">
+                👩 سارة — موظفة الاستقبال
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('مازن', 2)">
+                👨 مازن — حارس الفندق
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('رامي', 2)">
+                👨 رامي — نزيل في الفندق
+            </div>
+
+            <div class="suspect" onclick="chooseSuspect('دانا', 2)">
+                👩 دانا — مديرة الفندق
+            </div>
+
+        </div>
+
+        <div id="result2" class="result"></div>
+
+        <button id="back" onclick="backToMenu()">
+            🔙 العودة إلى القضايا
+        </button>
+
+    </div>
 
 </div>
 
+
 <script>
 
-function showClue(number) {
-    document.getElementById("clue" + number).style.display = "block";
+function openCase(number) {
+
+    document.getElementById("caseMenu").classList.add("hidden");
+
+    document.getElementById("case1").classList.add("hidden");
+    document.getElementById("case2").classList.add("hidden");
+
+    document.getElementById("case" + number).classList.remove("hidden");
 }
 
-function chooseSuspect(name) {
 
-    let result = document.getElementById("result");
+function backToMenu() {
 
-    if (name === "عمر") {
+    document.getElementById("caseMenu").classList.remove("hidden");
+
+    document.getElementById("case1").classList.add("hidden");
+    document.getElementById("case2").classList.add("hidden");
+
+}
+
+
+function showClue(id) {
+
+    document.getElementById(id).style.display = "block";
+
+}
+
+
+function chooseSuspect(name, caseNumber) {
+
+    let result = document.getElementById("result" + caseNumber);
+
+    if (caseNumber === 1 && name === "عمر") {
 
         result.innerHTML =
         "🎉 أحسنت! لقد حللت القضية! 🕵🏻‍♀️🔎<br><br>" +
         "كان عمر هو السارق.";
 
-    } else {
+    }
+
+    else if (caseNumber === 2 && name === "دانا") {
+
+        result.innerHTML =
+        "🎉 مذهل! حللت القضية الثانية! 💎🕵🏻‍♀️<br><br>" +
+        "كانت دانا هي سارقة الماسة.";
+
+    }
+
+    else {
 
         result.innerHTML =
         "❌ اختيار خاطئ!<br><br>" +
-        "هذا الشخص ليس السارق. حاول مرة أخرى 🔎";
+        "هذا الشخص ليس السارق. اقرأ الأدلة مرة أخرى 🔎";
 
     }
+
 }
 
 </script>
